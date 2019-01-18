@@ -25,7 +25,7 @@ return [0, 1].
 
 int result[2] = {0,0};
 
-/** answer 1 : */
+/** answer 1 : O(n*n) */
 int* twoSum(int* nums, int numsSize, int target) {
     if (numsSize < 2) {
         NSLog(@"the nums size error ,must larger then 2");
@@ -43,11 +43,19 @@ int* twoSum(int* nums, int numsSize, int target) {
     return NULL;
 }
 
-/** answer 2: */
+/** answer 2: O(n) */
 int* twoSum1(int* nums, int numsSize, int target){
+    int *returnArray = malloc(sizeof(int)*2);
+    for(int i = 0, j = 1; i < numsSize; j++) {
+        if(j == numsSize) j = ++i + 1;
+        if(nums[i] + nums[j] == target) {
+            returnArray[0] = i;
+            returnArray[1] = j;
+            break;
+        }
+    }
+    return returnArray;
     
-    
-    return NULL;
 }
 
 
