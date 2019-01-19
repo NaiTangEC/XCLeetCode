@@ -45,17 +45,43 @@ int* twoSum(int* nums, int numsSize, int target) {
 
 /** answer 2: O(n) */
 int* twoSum1(int* nums, int numsSize, int target){
-    int *returnArray = malloc(sizeof(int)*2);
+    int *resualtArray = malloc(sizeof(int)*2);
     for(int i = 0, j = 1; i < numsSize; j++) {
         if(j == numsSize) j = ++i + 1;
         if(nums[i] + nums[j] == target) {
-            returnArray[0] = i;
-            returnArray[1] = j;
+            resualtArray[0] = i;
+            resualtArray[1] = j;
             break;
         }
     }
-    return returnArray;
+    return resualtArray;
     
+}
+
+/** answer 3: 使用set  */
+
+int * towSum2(int * nums, int numsSize, int target){
+    int *resultArray = malloc(sizeof(int) * 2);
+    
+    NSMutableSet *numsSet = [NSMutableSet set];
+    /** 1. 将数组中的元素添加到set 中 */
+    for (int i = 0; i < numsSize; i++) {
+        [numsSet addObject:@(nums[i])];
+    }
+    NSUInteger setCount = numsSet.count;
+    int index = 0;
+    for (int i = 0; i < numsSize; i++) {
+        int delta = target - nums[i];
+        [numsSet addObject:@(delta)];
+        NSUInteger newSetCount = numsSet.count;
+        if (setCount != newSetCount) {
+            setCount = newSetCount;
+        }else{
+            resultArray[index++] = i;
+        }
+    }
+    
+    return resultArray;
 }
 
 
@@ -66,9 +92,10 @@ int main(int argc, const char * argv[]) {
         int sample[] = {1,4,5,2,6,9,3,11,7,8,23};
         int target = 31;
         
-        twoSum(sample, 11, target);
+//        twoSum(sample, 11, target);
+        int *result1 = towSum2(sample, 11, target);
         
-        NSLog(@"result is  %d    %d",result[0], result[1]);
+        NSLog(@"result is  %d    %d",result1[0], result1[1]);
     }
     return 0;
 }
